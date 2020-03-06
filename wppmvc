@@ -11,9 +11,7 @@ BOILERPLATE_PLUGIN_NAME='MVC WordPress Plugin Boilerplate'
 
 clone_repo(){
     echo 'Downloading vanilla boilerplate from Git'
-    git clone --single-branch --branch dev https://github.com/sumitpore/mvc-plugin-boilerplate-for-wordpress.git $GIT_REPO_DIR > /dev/null 2>&1
-    mv $GIT_REPO_DIR/plugin-name .
-    rm -Rf $GIT_REPO_DIR
+    git clone --single-branch --branch dev https://github.com/xitara/wp-mvc-plugin-boilerplate.git $GIT_REPO_DIR > /dev/null 2>&1
     echo 'Boilerplate Download Complete'
 }
 
@@ -61,4 +59,3 @@ find $PLUGIN_SLUG -type f -exec sed -i -e 's/'"PLUGIN_NAME_"'/'"$PLUGIN_CLASS"'/
 
 rename_files 'plugin-name' $PLUGIN_SLUG
 rename_files 'Plugin_Name' $PLUGIN_UPPER_SNAKE
-
