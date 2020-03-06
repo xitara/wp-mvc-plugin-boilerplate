@@ -36,7 +36,8 @@ It's safe to activate the plugin at this point. Because the Boilerplate has no r
 
 If you don't want to do search & replace manually, you can download the generator script into wp-content/plugins & execute it.
 ```bash
-wget -O wppmvc https://raw.githubusercontent.com/xitara/wp-mvc-plugin-boilerplate/master/wppmvc && bash wppmvc
+wget -O wppmvc https://raw.githubusercontent.com/xitara/wp-mvc-plugin-boilerplate/master/wppmvc && chmod 755 wppmvc
+./wppmvc My Cool Plugin
 ```
 
 ## Getting Started
