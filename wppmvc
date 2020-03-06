@@ -6,12 +6,11 @@ if [ $# -lt 1 ]; then
     exit
 fi
 
-GIT_REPO_DIR='mvc-plugin-boilerplate-temp'
 BOILERPLATE_PLUGIN_NAME='MVC WordPress Plugin Boilerplate'
 
 clone_repo(){
     echo 'Downloading vanilla boilerplate from Git'
-    git clone https://github.com/xitara/wp-mvc-plugin-boilerplate.git $GIT_REPO_DIR > /dev/null 2>&1
+    git clone https://github.com/xitara/wp-mvc-plugin-boilerplate.git plugin-name > /dev/null 2>&1
     echo 'Boilerplate Download Complete'
 }
 
@@ -42,10 +41,10 @@ echo $PLUGIN_UPPER_SNAKE
 PLUGIN_CLASS=$(echo "$PLUGIN_NAME" | tr '[:lower:]' '[:upper:]' | sed 's/ /_/g')"_"
 echo $PLUGIN_CLASS
 
-find $PLUGIN_SLUG -type f -exec sed -i -e 's/'"Plugin Name"'/'"$PLUGIN_NAME"'/g' {} +
+find plugin-name -type f -exec sed -i -e 's/'"Plugin Name"'/'"$PLUGIN_NAME"'/g' {} +
 
 # revert change in comment, cause otherwise wordpress can't see this plugin
-sed -i -e 's/'"$PLUGIN_SLUG:"'/'"$PLUGIN_NAME:"'/g' plugin-name/plugin-name.php
+sed -i -e 's/'"$PLUGIN_NAME:"'/'"Plugin Name:"'/g' plugin-name/plugin-name.php
 
 # change name in description
 sed -i -e 's/'"$BOILERPLATE_PLUGIN_NAME"'/'"$PLUGIN_NAME"'/g' plugin-name/plugin-name.php
