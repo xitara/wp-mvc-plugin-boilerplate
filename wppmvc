@@ -11,7 +11,7 @@ BOILERPLATE_PLUGIN_NAME='MVC WordPress Plugin Boilerplate'
 
 clone_repo(){
     echo 'Downloading vanilla boilerplate from Git'
-    git clone --single-branch --branch dev https://github.com/xitara/wp-mvc-plugin-boilerplate.git $GIT_REPO_DIR > /dev/null 2>&1
+    git clone https://github.com/xitara/wp-mvc-plugin-boilerplate.git $GIT_REPO_DIR > /dev/null 2>&1
     echo 'Boilerplate Download Complete'
 }
 
