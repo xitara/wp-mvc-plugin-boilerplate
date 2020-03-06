@@ -1,0 +1,5 @@
+# edit this .gitignore file and add all files and directories to be ignored by git
+# docs: https://git-scm.com/docs/gitignore
+node_modules
+*.map
+vendor

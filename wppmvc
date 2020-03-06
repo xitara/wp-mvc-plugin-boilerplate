@@ -1,0 +1,64 @@
+#!/bin/bash
+
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 Plugin Name"
+    echo every word starts with capital letter
+    exit
+fi
+
+GIT_REPO_DIR='mvc-plugin-boilerplate-temp'
+BOILERPLATE_PLUGIN_NAME='MVC WordPress Plugin Boilerplate'
+
+clone_repo(){
+    echo 'Downloading vanilla boilerplate from Git'
+    git clone --single-branch --branch dev https://github.com/sumitpore/mvc-plugin-boilerplate-for-wordpress.git $GIT_REPO_DIR > /dev/null 2>&1
+    mv $GIT_REPO_DIR/plugin-name .
+    rm -Rf $GIT_REPO_DIR
+    echo 'Boilerplate Download Complete'
+}
+
+rename_files(){
+    if [ ! -z "$2" ]; then
+        # Rename Files inside a folder
+        find $PLUGIN_SLUG -type f -name "*$1*" | while read FILE ; do
+            newfile="$(echo ${FILE} |sed -e 's/'"$1"'/'"$2"'/')" ;
+            mv "${FILE}" "${newfile}" ;
+        done
+    fi
+}
+
+clone_repo
+
+PLUGIN_NAME=$(echo "$@")
+echo $PLUGIN_NAME
+
+PLUGIN_SLUG=$(echo "$PLUGIN_NAME" | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')
+echo $PLUGIN_SLUG
+
+PLUGIN_SNAKE=$(echo "$PLUGIN_NAME" | tr '[:upper:]' '[:lower:]' | sed 's/ /_/g')
+echo $PLUGIN_SNAKE
+
+PLUGIN_UPPER_SNAKE=$(echo "$PLUGIN_NAME" | sed 's/ /_/g')
+echo $PLUGIN_UPPER_SNAKE
+
+PLUGIN_CLASS=$(echo "$PLUGIN_NAME" | tr '[:lower:]' '[:upper:]' | sed 's/ /_/g')"_"
+echo $PLUGIN_CLASS
+
+find $PLUGIN_SLUG -type f -exec sed -i -e 's/'"Plugin Name"'/'"$PLUGIN_NAME"'/g' {} +
+
+# revert change in comment, cause otherwise wordpress can't see this plugin
+sed -i -e 's/'"$PLUGIN_SLUG:"'/'"$PLUGIN_NAME:"'/g' plugin-name/plugin-name.php
+
+# change name in description
+sed -i -e 's/'"$BOILERPLATE_PLUGIN_NAME"'/'"$PLUGIN_NAME"'/g' plugin-name/plugin-name.php
+
+mv plugin-name $PLUGIN_SLUG
+
+find $PLUGIN_SLUG -type f -exec sed -i -e 's/'"plugin-name"'/'"$PLUGIN_SLUG"'/g' {} +
+find $PLUGIN_SLUG -type f -exec sed -i -e 's/'"plugin_name"'/'"$PLUGIN_SNAKE"'/g' {} +
+find $PLUGIN_SLUG -type f -exec sed -i -e 's/'"Plugin_Name"'/'"$PLUGIN_UPPER_SNAKE"'/g' {} +
+find $PLUGIN_SLUG -type f -exec sed -i -e 's/'"PLUGIN_NAME_"'/'"$PLUGIN_CLASS"'/g' {} +
+
+rename_files 'plugin-name' $PLUGIN_SLUG
+rename_files 'Plugin_Name' $PLUGIN_UPPER_SNAKE
+
